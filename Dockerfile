@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-slim
+FROM maven:3.8.1-jdk-8-alpine
 
 #A Directory in the base image to copy our depedencies
 WORKDIR /usr/share/tag
