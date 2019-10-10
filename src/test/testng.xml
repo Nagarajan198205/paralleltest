@@ -1,0 +1,7 @@
+<suite name="Suite1" verbose="1">
+    <test name="all-tests">
+        <packages>
+            <package name="hybridcloud.paralleltest"/>
+        </packages>
+    </test>
+</suite>
