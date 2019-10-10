@@ -1,11 +1,13 @@
 pipeline {
-    agent any
-    stage('Checkout code') {
+   
+    stages {  
+    	stage('Checkout code') {
+    	agent any
         steps {
             checkout scm
-        }
-    }
-    stages {    
+        	}
+    	}
+      
         stage('Build Jar') {
             agent {
                 docker {
