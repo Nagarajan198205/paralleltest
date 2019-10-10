@@ -4,7 +4,7 @@ checkout([
         doGenerateSubmoduleConfigurations: false,
         extensions: [[$class: 'CleanCheckout']],
         submoduleCfg: [],
-        userRemoteConfigs: [[credentialsId: '7338c4f5-1503-4d9b-aefe-e57d63252956', url: 'https://github.com/nagarajan25/paralleltest.git'']]
+        userRemoteConfigs: [[credentialsId: '7338c4f5-1503-4d9b-aefe-e57d63252956', url: 'https://github.com/nagarajan25/paralleltest.git']]
     ])
 
 pipeline{
@@ -18,5 +18,4 @@ steps{
 }
 }
 }
-
 }
