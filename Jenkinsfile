@@ -1,21 +1,9 @@
-checkout([
-        $class: 'GitSCM',
-        branches: [[name: '*/master']],
-        doGenerateSubmoduleConfigurations: false,
-        extensions: [[$class: 'CleanCheckout']],
-        submoduleCfg: [],
-        userRemoteConfigs: [[credentialsId: '7338c4f5-1503-4d9b-aefe-e57d63252956', url: 'https://github.com/nagarajan25/paralleltest.git']]
-    ])
-
 pipeline{
-agent any
 stages{
-stage('checkout'){
-steps{
-    script{
-        checkout
+stage('Checkout code') {
+        steps {
+            checkout scm
+        }
     }
-}
-}
 }
 }
