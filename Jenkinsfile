@@ -10,7 +10,7 @@ pipeline {
         stage('Build Jar') {
             agent {
                 docker {
-                    image 'maven:1.3.5'
+                    image 'maven:3.8.1'
                     args '-v $HOME/.m2:/root/.m2'
                 }
             }
