@@ -39,7 +39,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.6.2</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -59,9 +59,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>vinsdocker/containerparalleltest</repository>
+					<repository>hackathon/containerparalleltest</repository>
 					<!-- version of your image: could be sprint11 or release5 etc -->
-					<tag>paralleltestrelease1</tag>
+					<tag>containerparalleltest1</tag>
 				</configuration>
 			</plugin>
 		</plugins>

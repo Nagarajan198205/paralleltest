@@ -1,21 +1,27 @@
-FROM maven:3.8.1-jdk-8-alpine
+FROM openjdk:8-jdk-slim
 
-#A Directory in the base image to copy our depedencies
-WORKDIR /usr/share/tag
+ARG MAVEN_VERSION=3.6.2
+ARG USER_HOME_DIR="/root"
+ARG SHA=d941423d115cd021514bfd06c453658b1b3e39e6240969caf4315ab7119a77299713f14b620fb2571a264f8dff2473d8af3cb47b05acf0036fc2553199a5c1ee
+ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
 
-# Add the project jar & copy dependencies
-ADD  target/containerparalleltest.jar containerparalleltest.jar
-ADD  target/libs libs
+RUN apt-get update && \
+    apt-get install -y \
+      curl procps \
+  && rm -rf /var/lib/apt/lists/*
 
-# Add the suite xmls
-ADD suite/testng.xml testng.xml
+RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
+  && curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+  && echo "${SHA}  /tmp/apache-maven.tar.gz" | sha512sum -c - \
+  && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
+  && rm -f /tmp/apache-maven.tar.gz \
+  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-# Command line to execute the test
-# Expects below ennvironment variables
-# BROWSER = chrome / firefox
- MODULE  = testng.xml
-# SELENIUM_HUB = selenium hub hostname / ipaddress
+ENV MAVEN_HOME /usr/share/maven
+ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-# ENTRYPOINT java -cp containerparalleltest.jar:libs/* -DseleniumHubHost=$SELENIUM_HUB -Dbrowser=$BROWSER org.testng.TestNG $MODULE
+COPY mvn-entrypoint.sh /usr/local/bin/mvn-entrypoint.sh
+COPY settings-docker.xml /usr/share/maven/ref/
 
-ENTRYPOINT java -cp containerparalleltest.jar:libs/* -Dbrowser=$BROWSER org.testng.TestNG $MODULE
+ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
+CMD ["mvn clean test"]
